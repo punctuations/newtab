@@ -27,7 +27,6 @@ export function Checklist() {
   return (
     <div className="flex space-x-4 items-end justify-start">
       <div className="flex flex-col space-y-3 mb-10">
-        <p>{checks.data.length}</p>
         {checks.data.map((c, i) => {
           return (
             <div key={`${c.name} #${i}`} className="flex items-center">
