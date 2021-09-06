@@ -1,3 +1,5 @@
+import React from "react";
+
 export function Quotes() {
   const quotes = [
     "〝Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.〞 ⸺ Ferris Bueller.",
@@ -10,9 +12,9 @@ export function Quotes() {
     "〝You can't build a reputation on what you are going to do.〞 ⸺ Henry Ford.",
   ];
 
-  return (
-    <pre className="text-xs text-center px-32">
-      {quotes[Math.floor(Math.random() * quotes.length)]}
-    </pre>
+  const [quote] = React.useState(
+    quotes[Math.floor(Math.random() * quotes.length)]
   );
+
+  return <pre className="z-20 text-xs text-center px-32">{quote}</pre>;
 }

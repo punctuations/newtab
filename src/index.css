@@ -27,10 +27,15 @@ body {
 @layer utilities {
   @variants hover {
     .text-shadow-blur {
-      text-shadow: 0 0 8px #fff;
+      text-shadow: 0 0 8px #000;
     }
     .text-shadow-none {
       text-shadow: none;
+    }
+  }
+  @variants dark {
+    .text-shadow-blur-dark {
+      text-shadow: 0 0 8px #fff;
     }
   }
 }

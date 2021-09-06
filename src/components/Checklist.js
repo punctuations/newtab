@@ -2,44 +2,33 @@ import React from "react";
 import { CheckContext } from "../App";
 
 export function Checklist() {
-  const { setCheckVisibility } = React.useContext(CheckContext);
-
-  const [checks, setChecks] = React.useState([
-    { name: "Todo", completed: false },
-  ]);
-
-  React.useEffect(() => {
-    const getChecks = setInterval(() => {
-      if (localStorage.getItem("checks")) {
-        setChecks(JSON.parse(localStorage.getItem("checks")));
-      }
-    }, 200);
-
-    return () => clearInterval(getChecks);
-  });
+  const { checks, setChecks } = React.useContext(CheckContext);
 
   function updateStorage(local) {
-    checks[local.index].completed = local.completed === "on";
+    const t = checks.data;
+    t[local.index].completed = true;
 
-    localStorage.setItem("checks", JSON.stringify(checks));
+    setChecks({ visible: checks.visible, data: t });
 
-    if (local.completed === "on") {
-      setTimeout(() => {
-        deleteCheck({ index: local.index });
-      }, 1000);
-    }
+    setTimeout(() => {
+      deleteCheck({ index: local.index });
+    }, 1000);
   }
   function deleteCheck(check) {
-    checks.splice(check.index, 1);
-    console.log(checks);
+    const t = checks.data;
 
-    localStorage.setItem("checks", JSON.stringify(checks));
+    t.splice(check.index, 1);
+
+    setChecks({ visible: checks.visible, data: t });
+
+    localStorage.setItem("checks", JSON.stringify(t));
   }
 
   return (
     <div className="flex space-x-4 items-end justify-start">
       <div className="flex flex-col space-y-3 mb-10">
-        {checks.map((c, i) => {
+        <p>{checks.data.length}</p>
+        {checks.data.map((c, i) => {
           return (
             <div key={`${c.name} #${i}`} className="flex items-center">
               {c.completed ? (
@@ -53,7 +42,7 @@ export function Checklist() {
                       index: i,
                     })
                   }
-                  className="appearance-none form-checkbox h-4 w-4 checked:text-black focus:text-black hover:text-black checked:ring-2 ring-white checked:border-transparent focus:border-transparent rounded"
+                  className="appearance-none form-checkbox h-4 w-4 checked:text-black focus:text-black hover:text-black checked:ring-2 ring-white checked:border-transparent focus:border-transparent border rounded"
                 />
               ) : (
                 <input
@@ -74,7 +63,7 @@ export function Checklist() {
                   htmlFor={c.name}
                   className="relative inline-block ml-2 block text-sm"
                 >
-                  <span className="absolute inline-block top-1/2 border-t border-white animate-strikethrough" />
+                  <span className="absolute inline-block top-1/2 border-t border-black dark:border-white animate-strikethrough" />
                   {c.name}
                 </label>
               ) : (
@@ -87,8 +76,8 @@ export function Checklist() {
         })}
       </div>
       <button
-        onClick={() => setCheckVisibility(true)}
-        className="p-2 text-gray-400 rounded-md w-12 bg-gray-800 backdrop-blur-xl backdrop-hue-rotate-60 flex items-center justify-center transition-transform duration-500 hover:scale-110 bg-opacity-90"
+        onClick={() => setChecks({ visible: true, data: checks.data })}
+        className="p-2 text-gray-400 rounded-md w-12 bg-gray-200 dark:bg-gray-800 backdrop-blur-xl backdrop-hue-rotate-60 flex items-center justify-center transition-transform duration-500 hover:scale-110 bg-opacity-60"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

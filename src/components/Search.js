@@ -18,6 +18,10 @@ export function Search() {
     "!github punctuations/newtab",
   ];
 
+  const [placeholder] = React.useState(
+    urls[Math.floor(Math.random() * urls.length)]
+  );
+
   function submit(e) {
     if (e.key === "Enter") {
       window.location.href = `https://search.balls.workers.dev/?q=${encodeURIComponent(
@@ -29,14 +33,14 @@ export function Search() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="z-20 flex flex-col">
       <label htmlFor="search">search</label>
       <div className="flex flex-row">
         <input
           id="search"
           name="search"
-          placeholder={urls[Math.floor(Math.random() * urls.length)]}
-          className="ml-2 focus:outline-none bg-transparent border-b border-white"
+          placeholder={placeholder}
+          className="ml-2 focus:outline-none bg-transparent border-b border-black dark:border-white"
           onChange={(e) => setLocation(e.target.value)}
           onKeyDown={(e) => submit(e)}
         />
