@@ -45,7 +45,7 @@ function App() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="absolute flex justify-between w-11/12 bottom-5 left-12"
+        className="absolute flex justify-between items-end w-11/12 bottom-5 left-12"
       >
         <Checklist />
         <Greeting />

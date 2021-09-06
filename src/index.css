@@ -11,6 +11,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.animate-strikethrough {
+  animation: strike 0.5s forwards;
+}
+
+@keyframes strike {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 @layer utilities {
   @variants hover {
     .text-shadow-blur {

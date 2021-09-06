@@ -2,7 +2,7 @@ import React from "react";
 
 export function Checklist() {
   const [checks, setChecks] = React.useState([
-    { name: "Todo", completed: "0" },
+    { name: "Todo", completed: false },
   ]);
 
   React.useEffect(() => {
@@ -16,7 +16,19 @@ export function Checklist() {
   });
 
   function updateStorage(local) {
-    checks[local.index].completed = local.completed;
+    checks[local.index].completed = local.completed === "on";
+
+    localStorage.setItem("checks", JSON.stringify(checks));
+
+    if (local.completed === "on") {
+      setTimeout(() => {
+        deleteCheck({ index: local.index });
+      }, 1000);
+    }
+  }
+  function deleteCheck(check) {
+    checks.splice(check.index, 1);
+    console.log(checks);
 
     localStorage.setItem("checks", JSON.stringify(checks));
   }
@@ -37,7 +49,7 @@ export function Checklist() {
                     index: i,
                   })
                 }
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                className="appearance-none form-checkbox h-4 w-4 checked:text-black focus:text-black hover:text-black checked:ring-2 ring-white checked:border-transparent focus:border-transparent rounded"
               />
             ) : (
               <input
@@ -49,16 +61,16 @@ export function Checklist() {
                     index: i,
                   })
                 }
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                className="appearance-none form-checkbox h-4 w-4 text-white focus:ring-0 checked:border-transparent focus:border-transparent rounded"
               />
             )}
 
             {c.completed ? (
               <label
                 htmlFor={c.name}
-                className="ml-2 block text-sm line-through"
+                className="relative inline-block ml-2 block text-sm"
               >
-                <span />
+                <span className="absolute inline-block top-1/2 border-t border-white animate-strikethrough" />
                 {c.name}
               </label>
             ) : (
