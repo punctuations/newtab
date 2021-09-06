@@ -55,7 +55,7 @@ function App() {
         {quotes && <Quotes />}
       </motion.main>
       <CheckContext.Provider value={value}>
-        {checkVisibility && <Menu check />}
+        <Menu />
       </CheckContext.Provider>
 
       <motion.footer
