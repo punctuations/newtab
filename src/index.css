@@ -11,7 +11,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer utilities {
+  @variants hover {
+    .text-shadow-blur {
+      text-shadow: 0 0 8px #fff;
+    }
+    .text-shadow-none {
+      text-shadow: none;
+    }
+  }
 }
+
