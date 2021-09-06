@@ -36,7 +36,7 @@ export function Search() {
           id="search"
           name="search"
           placeholder={urls[Math.floor(Math.random() * urls.length)]}
-          className="ml-2 focus:outline-none bg-black border-b border-white"
+          className="ml-2 focus:outline-none bg-transparent border-b border-white"
           onChange={(e) => setLocation(e.target.value)}
           onKeyDown={(e) => submit(e)}
         />

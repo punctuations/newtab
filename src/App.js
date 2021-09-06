@@ -5,6 +5,12 @@ import { Search } from "./components/Search";
 import { Quotes } from "./components/Quotes";
 import { Greeting } from "./components/Greeting";
 import { Checklist } from "./components/Checklist";
+import { Menu } from "./components/Menu";
+
+export const CheckContext = React.createContext({
+  visible: false,
+  setVisibility: () => {},
+});
 
 function App() {
   const [quotes, setQuotes] = React.useState(true);
@@ -18,6 +24,13 @@ function App() {
 
     return () => clearInterval(getQuotes);
   });
+
+  const [checkVisibility, setCheckVisibility] = React.useState();
+
+  const value = React.useMemo(
+    () => ({ checkVisibility, setCheckVisibility }),
+    [checkVisibility]
+  );
 
   return (
     <div className="absolute flex bg-black text-white h-full w-full">
@@ -41,13 +54,19 @@ function App() {
         <Search />
         {quotes && <Quotes />}
       </motion.main>
+      <CheckContext.Provider value={value}>
+        {checkVisibility && <Menu check />}
+      </CheckContext.Provider>
+
       <motion.footer
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
         className="absolute flex justify-between items-end w-11/12 bottom-5 left-12"
       >
-        <Checklist />
+        <CheckContext.Provider value={value}>
+          <Checklist />
+        </CheckContext.Provider>
         <Greeting />
       </motion.footer>
     </div>
