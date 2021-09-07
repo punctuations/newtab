@@ -8,7 +8,7 @@ import { Quotes } from "./components/Quotes";
 import { Greeting } from "./components/Greeting";
 import { Checklist } from "./components/Checklist";
 import { Menu, Settings } from "./components/Menu";
-import { Temp } from "./components/Temp";
+import { Time } from "./components/Time";
 
 export const CheckContext = React.createContext({
   checks: {
@@ -22,7 +22,7 @@ export const SettingsContext = React.createContext({
   settings: {
     visible: false,
     background: null,
-    temp: false,
+    time: false,
     quotes: true,
     blur: true,
     theme: "dark",
@@ -64,14 +64,14 @@ function App() {
     return JSON.parse(localStorage.getItem("blur"));
   }
 
-  function tempLoad() {
-    return JSON.parse(localStorage.getItem("temp"));
+  function timeLoad() {
+    return JSON.parse(localStorage.getItem("time"));
   }
 
   const [settings, setSettings] = React.useState({
     visible: false,
     background: bgLoad(),
-    temp: tempLoad(),
+    time: timeLoad(),
     quotes: quoteLoad(),
     blur: blurLoad(),
     theme: themeLoad(),
@@ -96,12 +96,12 @@ function App() {
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
 
-  useKeyPress("W", () => {
+  useKeyPress("C", () => {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
         background: settings.background,
-        temp: !settings.temp,
+        time: !settings.time,
         quotes: settings.quotes,
         blur: settings.blur,
         theme: settings.theme,
@@ -113,7 +113,7 @@ function App() {
       setSettings({
         visible: settings.visible,
         background: settings.background,
-        temp: settings.temp,
+        time: settings.time,
         quotes: !settings.quotes,
         blur: settings.blur,
         theme: settings.theme,
@@ -125,7 +125,7 @@ function App() {
       setSettings({
         visible: settings.visible,
         background: settings.background,
-        temp: settings.temp,
+        time: settings.time,
         quotes: settings.quotes,
         blur: !settings.blur,
         theme: settings.theme,
@@ -137,7 +137,7 @@ function App() {
       setSettings({
         visible: settings.visible,
         background: settings.background,
-        temp: settings.temp,
+        time: settings.time,
         quotes: settings.quotes,
         blur: settings.blur,
         theme: settings.theme === "light" ? "dark" : "light",
@@ -157,7 +157,7 @@ function App() {
       >
         <div className="flex justify-between w-full px-5 mt-5">
           <SettingsContext.Provider value={val}>
-            <Temp />
+            <Time />
           </SettingsContext.Provider>
           <a
             href="https://github.com/punctuations/newtab"
