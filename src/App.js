@@ -96,6 +96,18 @@ function App() {
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
 
+  useKeyPress("ESCAPE", () => {
+    if (document.activeElement.tagName.toLowerCase() !== "input")
+      setSettings({
+        visible: !settings.visible,
+        background: settings.background,
+        time: settings.time,
+        quotes: settings.quotes,
+        blur: settings.blur,
+        theme: settings.theme,
+      });
+  });
+
   useKeyPress("C", () => {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
