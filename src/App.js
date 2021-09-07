@@ -10,7 +10,10 @@ import { Checklist } from "./components/Checklist";
 import { Menu, Settings } from "./components/Menu";
 
 export const CheckContext = React.createContext({
-  checks: { visible: false, data: [{ name: "My Todo!", completed: false }] },
+  checks: {
+    visible: false,
+    data: [{ default: true, name: "My Todo!", completed: false }],
+  },
   setChecks: () => {},
 });
 
@@ -19,6 +22,7 @@ export const SettingsContext = React.createContext({
     visible: false,
     background: null,
     quotes: true,
+    blur: true,
     theme: "dark",
   },
   setSettings: () => {},
@@ -47,17 +51,22 @@ function App() {
   }
 
   function quoteLoad() {
-    return localStorage.getItem("quotes") !== null;
+    return JSON.parse(localStorage.getItem("quotes"));
   }
 
   function bgLoad() {
     return localStorage.getItem("bg");
   }
 
+  function blurLoad() {
+    return JSON.parse(localStorage.getItem("blur"));
+  }
+
   const [settings, setSettings] = React.useState({
     visible: false,
     background: bgLoad(),
     quotes: quoteLoad(),
+    blur: blurLoad(),
     theme: themeLoad(),
   });
 
@@ -69,8 +78,12 @@ function App() {
   }, [settings.theme]);
 
   React.useEffect(() => {
-    if (settings.quotes) localStorage.setItem("quotes", settings.quotes);
+    localStorage.setItem("quotes", settings.quotes);
   }, [settings.quotes]);
+
+  React.useEffect(() => {
+    localStorage.setItem("blur", settings.blur);
+  }, [settings.blur]);
 
   const val = React.useMemo(() => ({ settings, setSettings }), [settings]);
 
@@ -82,6 +95,18 @@ function App() {
         visible: settings.visible,
         background: settings.background,
         quotes: !settings.quotes,
+        blur: settings.blur,
+        theme: settings.theme,
+      });
+  });
+
+  useKeyPress("B", () => {
+    if (document.activeElement.tagName.toLowerCase() !== "input")
+      setSettings({
+        visible: settings.visible,
+        background: settings.background,
+        quotes: settings.quotes,
+        blur: !settings.blur,
         theme: settings.theme,
       });
   });
@@ -92,6 +117,7 @@ function App() {
         visible: settings.visible,
         background: settings.background,
         quotes: settings.quotes,
+        blur: settings.blur,
         theme: settings.theme === "light" ? "dark" : "light",
       });
   });
@@ -124,7 +150,9 @@ function App() {
         className="w-full h-full flex flex-col items-center justify-center space-y-12"
       >
         <Search />
-        {settings.quotes && <Quotes />}
+        <SettingsContext.Provider value={val}>
+          {settings.quotes && <Quotes />}
+        </SettingsContext.Provider>
       </motion.main>
       <SettingsContext.Provider value={val}>
         <CheckContext.Provider value={value}>

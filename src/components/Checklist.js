@@ -29,7 +29,12 @@ export function Checklist() {
       <div className="flex flex-col space-y-3 mb-10">
         {checks.data.map((c, i) => {
           return (
-            <div key={`${c.name} #${i}`} className="flex items-center">
+            <div
+              key={`${c.name} #${i}`}
+              className={`${
+                c.default && "blur hover:blur-none transition-all duration-500"
+              } flex items-center`}
+            >
               {c.completed ? (
                 <input
                   name={c.name}

@@ -1,6 +1,9 @@
 import React from "react";
+import { SettingsContext } from "../App";
 
 export function Quotes() {
+  const { settings } = React.useContext(SettingsContext);
+
   const quotes = [
     "〝Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.〞 ⸺ Ferris Bueller.",
     "〝When you have exhausted all possibilities, remember this - you haven't.〞 ⸺ Thomas Edison.",
@@ -16,5 +19,15 @@ export function Quotes() {
     quotes[Math.floor(Math.random() * quotes.length)]
   );
 
-  return <pre className="z-20 text-xs text-center px-32">{quote}</pre>;
+  return (
+    <pre
+      className={`z-20 text-xs ${
+        settings.blur
+          ? "transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black"
+          : ""
+      } text-center px-32`}
+    >
+      {quote}
+    </pre>
+  );
 }
