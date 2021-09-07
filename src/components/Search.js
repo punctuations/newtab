@@ -16,6 +16,7 @@ export function Search() {
     "!twitch ludwig",
     "!amazon body pillow",
     "!github punctuations/newtab",
+    "!spotify donda",
   ];
 
   const [placeholder] = React.useState(
