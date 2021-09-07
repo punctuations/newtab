@@ -32,6 +32,7 @@ export function Menu() {
       setSettings({
         visible: settings.visible,
         background: bg,
+        temp: settings.temp,
         quotes: settings.quotes,
         blur: settings.blur,
         theme: settings.theme,
@@ -51,6 +52,7 @@ export function Menu() {
               setSettings({
                 visible: false,
                 background: settings.background,
+                temp: settings.temp,
                 quotes: settings.quotes,
                 blur: settings.blur,
                 theme: settings.theme,
@@ -75,6 +77,7 @@ export function Menu() {
                   setSettings({
                     visible: false,
                     background: settings.background,
+                    temp: settings.temp,
                     quotes: settings.quotes,
                     blur: settings.blur,
                     theme: settings.theme,
@@ -129,6 +132,73 @@ export function Menu() {
                 </button>
               </div>
               <div className="flex items-center justify-between">
+                <p>temp</p>
+                <div className="flex space-x-4 justify-center items-center">
+                  <kbd className="py-1 w-8 text-center rounded bg-gray-200 dark:bg-gray-800 text-gray-400">
+                    W
+                  </kbd>
+                  {settings.temp ? (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          temp: false,
+                          quotes: settings.quotes,
+                          blur: settings.blur,
+                          theme: settings.theme,
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          temp: true,
+                          quotes: settings.quotes,
+                          blur: settings.blur,
+                          theme: settings.theme,
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
                 <p>quotes</p>
                 <div className="flex space-x-4 justify-center items-center">
                   <kbd className="py-1 w-8 text-center rounded bg-gray-200 dark:bg-gray-800 text-gray-400">
@@ -140,6 +210,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: false,
                           blur: settings.blur,
                           theme: settings.theme,
@@ -168,6 +239,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: true,
                           blur: settings.blur,
                           theme: settings.theme,
@@ -205,6 +277,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: settings.quotes,
                           blur: false,
                           theme: settings.theme,
@@ -239,6 +312,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: settings.quotes,
                           blur: true,
                           theme: settings.theme,
@@ -276,6 +350,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: settings.quotes,
                           blur: settings.blur,
                           theme: "light",
@@ -304,6 +379,7 @@ export function Menu() {
                         setSettings({
                           visible: settings.visible,
                           background: settings.background,
+                          temp: settings.temp,
                           quotes: settings.quotes,
                           blur: settings.blur,
                           theme: "dark",
@@ -397,6 +473,7 @@ export function Settings() {
         setSettings({
           visible: true,
           background: settings.background,
+          temp: settings.temp,
           quotes: settings.quotes,
           blur: settings.blur,
           theme: settings.theme,

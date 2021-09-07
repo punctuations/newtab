@@ -8,6 +8,7 @@ import { Quotes } from "./components/Quotes";
 import { Greeting } from "./components/Greeting";
 import { Checklist } from "./components/Checklist";
 import { Menu, Settings } from "./components/Menu";
+import { Temp } from "./components/Temp";
 
 export const CheckContext = React.createContext({
   checks: {
@@ -21,6 +22,7 @@ export const SettingsContext = React.createContext({
   settings: {
     visible: false,
     background: null,
+    temp: false,
     quotes: true,
     blur: true,
     theme: "dark",
@@ -62,9 +64,14 @@ function App() {
     return JSON.parse(localStorage.getItem("blur"));
   }
 
+  function tempLoad() {
+    return JSON.parse(localStorage.getItem("temp"));
+  }
+
   const [settings, setSettings] = React.useState({
     visible: false,
     background: bgLoad(),
+    temp: tempLoad(),
     quotes: quoteLoad(),
     blur: blurLoad(),
     theme: themeLoad(),
@@ -89,11 +96,24 @@ function App() {
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
 
+  useKeyPress("W", () => {
+    if (document.activeElement.tagName.toLowerCase() !== "input")
+      setSettings({
+        visible: settings.visible,
+        background: settings.background,
+        temp: !settings.temp,
+        quotes: settings.quotes,
+        blur: settings.blur,
+        theme: settings.theme,
+      });
+  });
+
   useKeyPress("Q", () => {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
         background: settings.background,
+        temp: settings.temp,
         quotes: !settings.quotes,
         blur: settings.blur,
         theme: settings.theme,
@@ -105,6 +125,7 @@ function App() {
       setSettings({
         visible: settings.visible,
         background: settings.background,
+        temp: settings.temp,
         quotes: settings.quotes,
         blur: !settings.blur,
         theme: settings.theme,
@@ -116,6 +137,7 @@ function App() {
       setSettings({
         visible: settings.visible,
         background: settings.background,
+        temp: settings.temp,
         quotes: settings.quotes,
         blur: settings.blur,
         theme: settings.theme === "light" ? "dark" : "light",
@@ -134,9 +156,9 @@ function App() {
         className="absolute w-full"
       >
         <div className="flex justify-between w-full px-5 mt-5">
-          <p className="transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black">
-            18°C
-          </p>
+          <SettingsContext.Provider value={val}>
+            <Temp />
+          </SettingsContext.Provider>
           <h3>New &rarr; Tab</h3>
           <SettingsContext.Provider value={val}>
             <Settings />
