@@ -159,7 +159,12 @@ function App() {
           <SettingsContext.Provider value={val}>
             <Temp />
           </SettingsContext.Provider>
-          <h3>New &rarr; Tab</h3>
+          <a
+            href="https://github.com/punctuations/newtab"
+            className="hover:underline"
+          >
+            New &rarr; Tab
+          </a>
           <SettingsContext.Provider value={val}>
             <Settings />
           </SettingsContext.Provider>
