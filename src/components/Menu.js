@@ -1,11 +1,13 @@
 import React from "react";
 import { CheckContext, SettingsContext } from "../App";
+import { AnimatePresence, motion } from "framer-motion";
 
 export function Menu() {
   const { checks, setChecks } = React.useContext(CheckContext);
   const { settings, setSettings } = React.useContext(SettingsContext);
 
   const [checkName, setCheckName] = React.useState(null);
+  const [bg, setBG] = React.useState(null);
 
   function createCheck(event) {
     if (event.key === "Enter" && checkName) {
@@ -23,11 +25,27 @@ export function Menu() {
     }
   }
 
+  function handleBG(e) {
+    if (e.key === "Enter") {
+      localStorage.setItem("bg", bg);
+
+      setSettings({
+        visible: settings.visible,
+        background: bg,
+        quotes: settings.quotes,
+        theme: settings.theme,
+      });
+    }
+  }
+
   return (
-    <>
+    <AnimatePresence initial={false}>
       {settings.visible && (
         <>
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: settings.theme === "dark" ? 0.5 : 0.2 }}
+            exit={{ opacity: 0 }}
             onClick={() =>
               setSettings({
                 visible: false,
@@ -36,10 +54,16 @@ export function Menu() {
                 theme: settings.theme,
               })
             }
-            className="z-10 absolute opacity-20 dark:opacity-50 bg-black w-full h-full"
+            className="z-30 absolute bg-black w-full h-full"
           />
 
-          <div className="-translate-x-1/2 -translate-y-1/2 z-20 bg-white dark:bg-black absolute top-1/2 left-1/2 flex flex-col items-start space-y-4 shadow-3xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, x: "-50%", y: "-50%" }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="z-40 bg-white dark:bg-black absolute top-1/2 left-1/2 flex flex-col items-start space-y-4 shadow-2xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6"
+          >
             <div className="flex w-full justify-between">
               <p className="p-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-500 text-xs font-bold">
                 Settings
@@ -76,10 +100,15 @@ export function Menu() {
               <div className="flex items-center justify-center space-x-4">
                 <p>background image</p>
                 <input
+                  onChange={(e) => setBG(e.target.value)}
+                  onKeyDown={(e) => handleBG(e)}
                   placeholder="URL"
                   className="ml-2 focus:outline-none bg-transparent border-b border-black dark:border-white"
                 />
-                <button className="p-2 rounded bg-gray-200 dark:bg-gray-800">
+                <button
+                  onClick={() => handleBG({ key: "Enter" })}
+                  className="p-2 rounded bg-gray-200 dark:bg-gray-800"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
@@ -98,132 +127,152 @@ export function Menu() {
               </div>
               <div className="flex items-center justify-between">
                 <p>quotes</p>
-                {settings.quotes ? (
-                  <button
-                    onClick={() =>
-                      setSettings({
-                        visible: settings.visible,
-                        background: settings.background,
-                        quotes: false,
-                        theme: settings.theme,
-                      })
-                    }
-                    className="p-2 rounded bg-gray-200 dark:bg-gray-800"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                <div className="flex space-x-4 justify-center items-center">
+                  <kbd className="py-1 w-8 text-center rounded bg-gray-200 dark:bg-gray-800 text-gray-400">
+                    Q
+                  </kbd>
+                  {settings.quotes ? (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          quotes: false,
+                          theme: settings.theme,
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      setSettings({
-                        visible: settings.visible,
-                        background: settings.background,
-                        quotes: true,
-                        theme: settings.theme,
-                      })
-                    }
-                    className="p-2 rounded bg-gray-200 dark:bg-gray-800"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          quotes: true,
+                          theme: settings.theme,
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </button>
-                )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <p>theme</p>{" "}
-                {settings.theme === "dark" ? (
-                  <button
-                    onClick={() =>
-                      setSettings({
-                        visible: settings.visible,
-                        background: settings.background,
-                        quotes: settings.quotes,
-                        theme: "light",
-                      })
-                    }
-                    className="p-2 rounded bg-gray-200 dark:bg-gray-800"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                <div className="flex space-x-4 justify-center items-center">
+                  <kbd className="py-1 w-8 text-center rounded bg-gray-200 dark:bg-gray-800 text-gray-400">
+                    T
+                  </kbd>
+                  {settings.theme === "dark" ? (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          quotes: settings.quotes,
+                          theme: "light",
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <button
-                    onClick={() =>
-                      setSettings({
-                        visible: settings.visible,
-                        background: settings.background,
-                        quotes: settings.quotes,
-                        theme: "dark",
-                      })
-                    }
-                    className="p-2 rounded bg-gray-200 dark:bg-gray-800"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        setSettings({
+                          visible: settings.visible,
+                          background: settings.background,
+                          quotes: settings.quotes,
+                          theme: "dark",
+                        })
+                      }
+                      className="p-2 rounded bg-gray-200 dark:bg-gray-800"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                      />
-                    </svg>
-                  </button>
-                )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
+
       {checks.visible && (
         <>
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: settings.theme === "dark" ? 0.5 : 0.2 }}
+            exit={{ opacity: 0 }}
             onClick={() => setChecks({ visible: false, data: checks.data })}
-            className="z-10 absolute opacity-50 bg-black w-full h-full"
+            className="z-30 absolute opacity-50 bg-black w-full h-full"
           />
 
-          <div className="z-20 bg-white dark:bg-black absolute top-3/4 left-24 flex flex-col space-y-1 items-start shadow-3xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="z-40 bg-white dark:bg-black absolute top-3/4 left-24 flex flex-col space-y-1 items-start shadow-2xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6"
+          >
             <p className="p-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-500 text-xs font-bold">
               Create New
             </p>
@@ -254,10 +303,10 @@ export function Menu() {
                 </svg>
               </button>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
-    </>
+    </AnimatePresence>
   );
 }
 

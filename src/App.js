@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import "./App.css";
 import React from "react";
+import { useKeyPress } from "ahooks";
+
 import { Search } from "./components/Search";
 import { Quotes } from "./components/Quotes";
 import { Greeting } from "./components/Greeting";
@@ -48,9 +50,13 @@ function App() {
     return localStorage.getItem("quotes") !== null;
   }
 
+  function bgLoad() {
+    return localStorage.getItem("bg");
+  }
+
   const [settings, setSettings] = React.useState({
     visible: false,
-    background: null,
+    background: bgLoad(),
     quotes: quoteLoad(),
     theme: themeLoad(),
   });
@@ -70,21 +76,46 @@ function App() {
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
 
+  useKeyPress("Q", () => {
+    if (document.activeElement.tagName.toLowerCase() !== "input")
+      setSettings({
+        visible: settings.visible,
+        background: settings.background,
+        quotes: !settings.quotes,
+        theme: settings.theme,
+      });
+  });
+
+  useKeyPress("T", () => {
+    if (document.activeElement.tagName.toLowerCase() !== "input")
+      setSettings({
+        visible: settings.visible,
+        background: settings.background,
+        quotes: settings.quotes,
+        theme: settings.theme === "light" ? "dark" : "light",
+      });
+  });
+
   return (
-    <div className="absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300">
+    <div
+      style={{ backgroundImage: `url(${settings.background})` }}
+      className="bg-cover absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300"
+    >
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="absolute flex justify-between w-11/12 top-5 left-12"
+        className="absolute w-full"
       >
-        <p className="transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black">
-          18°C
-        </p>
-        <h3>New &rarr; Tab</h3>
-        <SettingsContext.Provider value={val}>
-          <Settings />
-        </SettingsContext.Provider>
+        <div className="flex justify-between w-full px-5 mt-5">
+          <p className="transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black">
+            18°C
+          </p>
+          <h3>New &rarr; Tab</h3>
+          <SettingsContext.Provider value={val}>
+            <Settings />
+          </SettingsContext.Provider>
+        </div>
       </motion.header>
       <motion.main
         initial={{ opacity: 0 }}
@@ -105,12 +136,14 @@ function App() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="absolute flex justify-between items-end w-11/12 bottom-5 left-12"
+        className="absolute w-full bottom-5"
       >
-        <CheckContext.Provider value={value}>
-          <Checklist />
-        </CheckContext.Provider>
-        <Greeting />
+        <div className="flex justify-between items-end w-full px-5">
+          <CheckContext.Provider value={value}>
+            <Checklist />
+          </CheckContext.Provider>
+          <Greeting />
+        </div>
       </motion.footer>
     </div>
   );
