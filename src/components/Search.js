@@ -26,11 +26,24 @@ export function Search() {
     urls[Math.floor(Math.random() * urls.length)]
   );
 
+  const isURL = (string) => {
+    try {
+      return Boolean(new URL(string));
+    } catch (e) {
+      return false;
+    }
+  };
+
   function submit(e) {
     if (e.key === "Enter") {
-      window.location.href = `https://search.balls.workers.dev/?q=${location}&engine=${encodeURIComponent(
-        settings.engine
-      )}&ref=newtab`;
+      if (!isURL(location)) {
+        // user is searching, location is not address.
+        window.location.href = `https://search.balls.workers.dev/?q=${location}&engine=${encodeURIComponent(
+          settings.engine
+        )}&ref=newtab`;
+      } else {
+        window.location.href = location;
+      }
     }
   }
 
