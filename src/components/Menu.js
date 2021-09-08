@@ -31,6 +31,7 @@ export function Menu() {
 
       setSettings({
         visible: settings.visible,
+        engine: settings.engine,
         background: bg,
         time: settings.time,
         quotes: settings.quotes,
@@ -51,6 +52,7 @@ export function Menu() {
             onClick={() =>
               setSettings({
                 visible: false,
+                engine: settings.engine,
                 background: settings.background,
                 time: settings.time,
                 quotes: settings.quotes,
@@ -76,6 +78,7 @@ export function Menu() {
                 onClick={() =>
                   setSettings({
                     visible: false,
+                    engine: settings.engine,
                     background: settings.background,
                     time: settings.time,
                     quotes: settings.quotes,
@@ -132,6 +135,62 @@ export function Menu() {
                 </button>
               </div>
               <div className="flex items-center justify-between">
+                <p>search engine</p>
+                <select
+                  id="links"
+                  name="links"
+                  onChange={(e) =>
+                    setSettings({
+                      visible: settings.visible,
+                      engine: e.target.value,
+                      background: settings.background,
+                      time: settings.time,
+                      quotes: settings.quotes,
+                      blur: settings.blur,
+                      theme: settings.theme,
+                    })
+                  }
+                  className="duration-150 transition-colors focus:outline-none focus:ring-0 focus:border-black block 2xl:pl-8 xl:pl-8 lg:pl-8 md:pl-8 sm:pl-8 pl-16 pr-3 py-1 sm:text-sm border border-gray-400 rounded-md"
+                >
+                  <option
+                    selected={
+                      settings.engine === "https://google.com/search?q={q}"
+                    }
+                    key="google"
+                    value="https://google.com/search?q={q}"
+                  >
+                    google
+                  </option>
+                  <option
+                    selected={
+                      settings.engine === "https://duckduckgo.com?q={q}"
+                    }
+                    key="duckduckgo"
+                    value="https://duckduckgo.com?q={q}"
+                  >
+                    duckduckgo
+                  </option>
+                  <option
+                    selected={
+                      settings.engine === "https://www.ecosia.org/search?q={q}"
+                    }
+                    key="ecosia"
+                    value="https://www.ecosia.org/search?q={q}"
+                  >
+                    ecosia
+                  </option>
+                  <option
+                    selected={
+                      settings.engine === "https://www.bing.com/search?q={q}"
+                    }
+                    key="bing"
+                    value="https://www.bing.com/search?q={q}"
+                  >
+                    bing
+                  </option>
+                </select>
+              </div>
+              <div className="flex items-center justify-between">
                 <p>time</p>
                 <div className="flex space-x-4 justify-center items-center">
                   <kbd className="py-1 w-8 text-center rounded bg-gray-200 dark:bg-gray-800 text-gray-400">
@@ -142,6 +201,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: false,
                           quotes: settings.quotes,
@@ -171,6 +231,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: true,
                           quotes: settings.quotes,
@@ -209,6 +270,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: false,
@@ -238,6 +300,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: true,
@@ -276,6 +339,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: settings.quotes,
@@ -311,6 +375,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: settings.quotes,
@@ -349,6 +414,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: settings.quotes,
@@ -378,6 +444,7 @@ export function Menu() {
                       onClick={() =>
                         setSettings({
                           visible: settings.visible,
+                          engine: settings.engine,
                           background: settings.background,
                           time: settings.time,
                           quotes: settings.quotes,
@@ -472,6 +539,7 @@ export function Settings() {
       onClick={() =>
         setSettings({
           visible: true,
+          engine: settings.engine,
           background: settings.background,
           time: settings.time,
           quotes: settings.quotes,

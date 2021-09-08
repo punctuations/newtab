@@ -1,6 +1,9 @@
 import React from "react";
+import { SettingsContext } from "../App";
 
 export function Search() {
+  const { settings } = React.useContext(SettingsContext);
+
   const [location, setLocation] = React.useState("");
 
   const urls = [
@@ -25,10 +28,8 @@ export function Search() {
 
   function submit(e) {
     if (e.key === "Enter") {
-      window.location.href = `https://search.balls.workers.dev/?q=${encodeURIComponent(
-        location
-      )}&engine=${encodeURIComponent(
-        "https://duckduckgo.com/?q={q}"
+      window.location.href = `https://search.balls.workers.dev/?q=${location}&engine=${encodeURIComponent(
+        settings.engine
       )}&ref=newtab`;
     }
   }

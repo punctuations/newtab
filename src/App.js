@@ -21,6 +21,7 @@ export const CheckContext = React.createContext({
 export const SettingsContext = React.createContext({
   settings: {
     visible: false,
+    engine: "https://duckduckgo.com?q={q}",
     background: null,
     time: false,
     quotes: true,
@@ -68,8 +69,17 @@ function App() {
     return JSON.parse(localStorage.getItem("time"));
   }
 
+  function engineLoad() {
+    if (localStorage.getItem("engine")) {
+      return localStorage.getItem("engine");
+    } else {
+      return "https://duckduckgo.com?q={q}";
+    }
+  }
+
   const [settings, setSettings] = React.useState({
     visible: false,
+    engine: engineLoad(),
     background: bgLoad(),
     time: timeLoad(),
     quotes: quoteLoad(),
@@ -100,6 +110,7 @@ function App() {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: !settings.visible,
+        engine: settings.engine,
         background: settings.background,
         time: settings.time,
         quotes: settings.quotes,
@@ -112,6 +123,7 @@ function App() {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
+        engine: settings.engine,
         background: settings.background,
         time: !settings.time,
         quotes: settings.quotes,
@@ -124,6 +136,7 @@ function App() {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
+        engine: settings.engine,
         background: settings.background,
         time: settings.time,
         quotes: !settings.quotes,
@@ -136,6 +149,7 @@ function App() {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
+        engine: settings.engine,
         background: settings.background,
         time: settings.time,
         quotes: settings.quotes,
@@ -148,6 +162,7 @@ function App() {
     if (document.activeElement.tagName.toLowerCase() !== "input")
       setSettings({
         visible: settings.visible,
+        engine: settings.engine,
         background: settings.background,
         time: settings.time,
         quotes: settings.quotes,
@@ -188,7 +203,9 @@ function App() {
         transition={{ duration: 0.75 }}
         className="w-full h-full flex flex-col items-center justify-center space-y-12"
       >
-        <Search />
+        <SettingsContext.Provider value={val}>
+          <Search />
+        </SettingsContext.Provider>
         <SettingsContext.Provider value={val}>
           {settings.quotes && <Quotes />}
         </SettingsContext.Provider>
