@@ -9,7 +9,7 @@
 #    branches:
 #      - main
 #    paths:
-#      - 'ext/**'
+#      - 'extension/**'
 #
 #jobs:
 #  build:
