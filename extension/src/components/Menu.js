@@ -150,7 +150,7 @@ export function Menu() {
                       theme: settings.theme,
                     })
                   }
-                  className="duration-150 transition-colors dark:bg-black bg-white focus:outline-none focus:ring-0 focus:border-black block 2xl:pl-8 xl:pl-8 lg:pl-8 md:pl-8 sm:pl-8 pl-16 pr-3 py-1 sm:text-sm border border-gray-400 rounded-md"
+                  className="duration-150 transition-colors dark:bg-black bg-white focus:outline-none focus:ring-0 focus:border-black block pr-3 py-1 sm:text-sm border border-gray-400 rounded-md"
                 >
                   <option
                     selected={
