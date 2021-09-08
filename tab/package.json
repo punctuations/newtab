@@ -11,7 +11,7 @@
     "@tailwindcss/forms": "^0.3.3",
     "ahooks": "^2.10.9",
     "framer-motion": "^4.1.17",
-    "next": "10.2.2",
+    "next": "11.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
