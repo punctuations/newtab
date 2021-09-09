@@ -102,6 +102,10 @@ function App() {
     localStorage.setItem("blur", settings.blur);
   }, [settings.blur]);
 
+  React.useEffect(() => {
+    localStorage.setItem("time", settings.time);
+  }, [settings.time]);
+
   const val = React.useMemo(() => ({ settings, setSettings }), [settings]);
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
