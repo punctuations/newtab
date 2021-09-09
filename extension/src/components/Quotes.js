@@ -24,7 +24,7 @@ export function Quotes() {
       className={`z-20 text-xs ${
         settings.blur
           ? "transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black"
-          : ""
+          : "transition-all duration-500 text-shadow-none"
       } text-center px-32`}
     >
       {quote}
