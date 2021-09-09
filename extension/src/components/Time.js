@@ -1,5 +1,5 @@
 import React from "react";
-import { SettingsContext } from "../pages/tab";
+import { SettingsContext } from "../App";
 
 export function Time() {
   const { settings } = React.useContext(SettingsContext);
