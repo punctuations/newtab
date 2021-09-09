@@ -1,10 +1,11 @@
 import React from "react";
-import { SettingsContext } from "../pages";
+import { SettingsContext } from "../pages/tab";
 
 export function Time() {
   const { settings } = React.useContext(SettingsContext);
 
   const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+  const [browser, setBrowser] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -14,10 +15,20 @@ export function Time() {
     return () => clearInterval(interval);
   }, [time]);
 
+  React.useEffect(() => {
+    setBrowser(true);
+  }, []);
+
   return (
     <>
-      {settings.time ? (
-        <p className="transition-all duration-500 text-shadow-none">{time}</p>
+      {browser ? (
+        settings.time ? (
+          <p className="transition-all duration-500 text-shadow-none">{time}</p>
+        ) : (
+          <p className="transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black">
+            {time}
+          </p>
+        )
       ) : (
         <p className="transition-all duration-500 text-shadow-blur dark:text-shadow-blur-dark hover:text-shadow-none text-transparent dark:hover:text-white hover:text-black">
           {time}

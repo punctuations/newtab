@@ -1,79 +1,10 @@
-import { motion } from "framer-motion";
 import React from "react";
+import { motion } from "framer-motion";
 import { useKeyPress } from "ahooks";
+import Tilt from "react-parallax-tilt";
+import Image from "next/image";
 
-import { Search } from "../components/Search";
-import { Quotes } from "../components/Quotes";
-import { Greeting } from "../components/Greeting";
-import { Checklist } from "../components/Checklist";
-import { Menu, Settings } from "../components/Menu";
-import { Time } from "../components/Time";
-
-export const CheckContext = React.createContext({
-  checks: {
-    visible: false,
-    data: [{ default: true, name: "My Todo!", completed: false }],
-  },
-  setChecks: (p: {
-    visible: boolean;
-    data: { default: boolean; name: string; completed: boolean }[];
-  }) => {},
-});
-
-export const SettingsContext = React.createContext<{
-  settings: {
-    visible: boolean;
-    engine: string;
-    background: string | null;
-    time: boolean;
-    quotes: boolean;
-    blur: boolean;
-    theme: string;
-  };
-  setSettings: (p: {
-    visible: boolean;
-    engine: string;
-    background: string | null;
-    time: boolean;
-    quotes: boolean;
-    blur: boolean;
-    theme: string;
-  }) => void;
-}>({
-  settings: {
-    visible: false,
-    engine: "https://duckduckgo.com?q={q}",
-    background: null,
-    time: false,
-    quotes: true,
-    blur: true,
-    theme: "dark",
-  },
-  setSettings: (p: {
-    visible: boolean;
-    engine: string;
-    background: string | null;
-    time: boolean;
-    quotes: boolean;
-    blur: boolean;
-    theme: string;
-  }) => {},
-});
-
-function Home() {
-  const [checks, setChecks] = React.useState({
-    visible: false,
-    data: checkLoad(),
-  });
-
-  function checkLoad() {
-    if (process.browser && localStorage.getItem("checks")) {
-      return JSON.parse(localStorage.getItem("checks") as string);
-    } else {
-      return [{ name: "My Todo!", completed: false }];
-    }
-  }
-
+export default function Home() {
   function themeLoad(): string {
     if (process.browser && localStorage.getItem("theme")) {
       return localStorage.getItem("theme") as string;
@@ -151,69 +82,7 @@ function Home() {
     }
   }, [settings.theme]);
 
-  React.useEffect(() => {
-    localStorage.setItem("quotes", `${settings.quotes}`);
-  }, [settings.quotes]);
-
-  React.useEffect(() => {
-    localStorage.setItem("blur", `${settings.blur}`);
-  }, [settings.blur]);
-
   const val = React.useMemo(() => ({ settings, setSettings }), [settings]);
-
-  const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
-
-  useKeyPress("ESCAPE", () => {
-    if (document.activeElement?.tagName.toLowerCase() !== "input")
-      setSettings({
-        visible: !settings.visible,
-        engine: settings.engine,
-        background: settings.background,
-        time: settings.time,
-        quotes: settings.quotes,
-        blur: settings.blur,
-        theme: settings.theme,
-      });
-  });
-
-  useKeyPress("C", () => {
-    if (document.activeElement?.tagName.toLowerCase() !== "input")
-      setSettings({
-        visible: settings.visible,
-        engine: settings.engine,
-        background: settings.background,
-        time: !settings.time,
-        quotes: settings.quotes,
-        blur: settings.blur,
-        theme: settings.theme,
-      });
-  });
-
-  useKeyPress("Q", () => {
-    if (document.activeElement?.tagName.toLowerCase() !== "input")
-      setSettings({
-        visible: settings.visible,
-        engine: settings.engine,
-        background: settings.background,
-        time: settings.time,
-        quotes: !settings.quotes,
-        blur: settings.blur,
-        theme: settings.theme,
-      });
-  });
-
-  useKeyPress("B", () => {
-    if (document.activeElement?.tagName.toLowerCase() !== "input")
-      setSettings({
-        visible: settings.visible,
-        engine: settings.engine,
-        background: settings.background,
-        time: settings.time,
-        quotes: settings.quotes,
-        blur: !settings.blur,
-        theme: settings.theme,
-      });
-  });
 
   useKeyPress("T", () => {
     if (document.activeElement?.tagName.toLowerCase() !== "input")
@@ -229,10 +98,7 @@ function Home() {
   });
 
   return (
-    <div
-      style={{ backgroundImage: `url(${settings.background})` }}
-      className="bg-cover absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300"
-    >
+    <div className="absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300">
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -240,18 +106,15 @@ function Home() {
         className="absolute w-full"
       >
         <div className="flex justify-between w-full px-5 mt-5">
-          <SettingsContext.Provider value={val}>
-            <Time />
-          </SettingsContext.Provider>
           <a
             href="https://github.com/punctuations/newtab"
             className="hover:underline"
           >
             New &rarr; Tab
           </a>
-          <SettingsContext.Provider value={val}>
-            <Settings />
-          </SettingsContext.Provider>
+          <button className="py-2 px-6 rounded-md transition duration-300 border border-black dark:border-white dark:bg-white bg-black dark:text-black text-white dark:hover:bg-black hover:bg-white dark:hover:text-white hover:text-black">
+            Add it &rarr;
+          </button>
         </div>
       </motion.header>
       <motion.main
@@ -260,18 +123,25 @@ function Home() {
         transition={{ duration: 0.75 }}
         className="w-full h-full flex flex-col items-center justify-center space-y-12"
       >
-        <SettingsContext.Provider value={val}>
-          <Search />
-        </SettingsContext.Provider>
-        <SettingsContext.Provider value={val}>
-          {settings.quotes && <Quotes />}
-        </SettingsContext.Provider>
+        <a href="/tab" className="group">
+          <span className="group-hover:underline text-3xl">
+            An <span className="font-bold">uber</span>-customizable new tab
+            experience
+          </span>{" "}
+          <span className="group-hover:ml-2 transition-all duration-500 text-3xl">
+            &rarr;
+          </span>
+        </a>
+        <Tilt>
+          <Image
+            placeholder="blur"
+            blurDataURL="/img.png"
+            width={550}
+            height={300}
+            src="/img.png"
+          />
+        </Tilt>
       </motion.main>
-      <SettingsContext.Provider value={val}>
-        <CheckContext.Provider value={value}>
-          <Menu />
-        </CheckContext.Provider>
-      </SettingsContext.Provider>
 
       <motion.footer
         initial={{ opacity: 0, y: 20 }}
@@ -279,15 +149,17 @@ function Home() {
         transition={{ duration: 0.4 }}
         className="absolute w-full bottom-5"
       >
-        <div className="flex justify-between items-end w-full px-5">
-          <CheckContext.Provider value={value}>
-            <Checklist />
-          </CheckContext.Provider>
-          <Greeting />
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <hr className="border-gray-700 w-3/4" />
+          <p className="group">
+            Made with{" "}
+            <span className="group-hover:text-red-500 duration-300 transition-colors">
+              ❤
+            </span>{" "}
+            by Matt
+          </p>
         </div>
       </motion.footer>
     </div>
   );
 }
-
-export default Home;

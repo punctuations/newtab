@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckContext } from "../pages";
+import { CheckContext } from "../pages/tab";
 
 export function Checklist() {
   const { checks, setChecks } = React.useContext(CheckContext);
@@ -81,7 +81,7 @@ export function Checklist() {
       </div>
       <button
         onClick={() => setChecks({ visible: true, data: checks.data })}
-        className="p-2 text-gray-400 rounded-md w-12 bg-gray-200 dark:bg-gray-800 backdrop-blur-xl backdrop-hue-rotate-60 flex items-center justify-center transition-transform duration-500 hover:scale-110 bg-opacity-60"
+        className="p-2 rounded-md transition-colors duration-500 border dark:border-gray-600 hover:border-black dark:hover:border-white text-gray-500 dark:hover:text-white hover:text-black"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

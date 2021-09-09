@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckContext, SettingsContext } from "../pages";
+import { CheckContext, SettingsContext } from "../pages/tab";
 import { AnimatePresence, motion } from "framer-motion";
 
 export function Menu() {
@@ -151,7 +151,7 @@ export function Menu() {
                       theme: settings.theme,
                     })
                   }
-                  className="duration-150 transition-colors dark:bg-black bg-white focus:outline-none focus:ring-0 focus:border-black block py-1 sm:text-sm border border-gray-400 rounded-md"
+                  className="duration-150 transition-colors dark:bg-black bg-white focus:outline-none focus:ring-0 focus:border-black dark:focus:border-white block py-1 sm:text-sm border border-gray-400 rounded-md"
                 >
                   <option
                     selected={
@@ -548,7 +548,7 @@ export function Settings() {
           theme: settings.theme,
         })
       }
-      className="p-2 text-gray-400 rounded-md w-12 bg-gray-200 dark:bg-gray-800 backdrop-blur-xl backdrop-hue-rotate-60 flex items-center justify-center transition-transform duration-500 hover:scale-110 bg-opacity-60"
+      className="p-2 rounded-md transition-colors duration-500 border dark:border-gray-600 hover:border-black dark:hover:border-white text-gray-500 dark:hover:text-white hover:text-black"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

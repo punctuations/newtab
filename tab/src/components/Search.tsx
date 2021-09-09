@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { SettingsContext } from "../pages";
+import { SettingsContext } from "../pages/tab";
 
 export function Search() {
   const router = useRouter();
