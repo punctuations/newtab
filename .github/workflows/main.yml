@@ -48,6 +48,12 @@
 #        env:
 #          CI: true
 #
+#      - name Zip files
+#          - uses: papeloto/action-zip@v1
+#            with:
+#              files: extension/*
+#              dest: result.zip
+#
 #      - name: Chrome Extension upload & publish
 #        uses: Passiverecords/chrome-extension-upload-action@1.4.1
 #        with:
