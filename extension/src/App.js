@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import "./App.css";
 import React from "react";
 import { useKeyPress } from "ahooks";
+import { Helmet } from "react-helmet";
 
 import { Search } from "./components/Search";
 import { Quotes } from "./components/Quotes";
@@ -180,6 +181,33 @@ function App() {
       style={{ backgroundImage: `url(${settings.background})` }}
       className="bg-cover absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300"
     >
+      <Helmet>
+        <meta name="viewport" content="width=device-width" />
+        <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#2f3136" />
+        <title>New → Tab</title>
+        <meta name="robots" content="index,follow" />
+        <meta name="googlebot" content="index,follow" />
+        <meta
+          name="description"
+          content="An uber-customizable new tab experience."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@atmattt" />
+        <meta name="twitter:creator" content="@atmattt" />
+        <meta property="og:url" content="https://newtab.vc/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="New → Tab" />
+        <meta
+          property="og:description"
+          content="An uber-customizable new tab experience."
+        />
+        <meta property="og:image" content="/img.png" />
+        <meta property="og:image:width" content="1224" />
+        <meta property="og:image:height" content="719" />
+      </Helmet>
+
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
