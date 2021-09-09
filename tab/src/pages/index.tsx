@@ -2,7 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useKeyPress } from "ahooks";
 import Tilt from "react-parallax-tilt";
+import Head from "next/head";
 import Image from "next/image";
+import { NextSeo } from "next-seo";
 
 export default function Home() {
   function themeLoad(): string {
@@ -98,68 +100,97 @@ export default function Home() {
   });
 
   return (
-    <div className="absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300">
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="absolute w-full"
-      >
-        <div className="flex justify-between w-full px-5 mt-5">
-          <a
-            href="https://github.com/punctuations/newtab"
-            className="hover:underline"
-          >
-            New &rarr; Tab
-          </a>
-          <button className="py-2 px-6 rounded-md transition duration-300 border border-black dark:border-white dark:bg-white bg-black dark:text-black text-white dark:hover:bg-black hover:bg-white dark:hover:text-white hover:text-black">
-            Add it &rarr;
-          </button>
-        </div>
-      </motion.header>
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.75 }}
-        className="w-full h-full flex flex-col items-center justify-center space-y-12"
-      >
-        <a href="/tab" className="group">
-          <span className="group-hover:underline text-3xl">
-            An <span className="font-bold">uber</span>-customizable new tab
-            experience
-          </span>{" "}
-          <span className="group-hover:ml-2 transition-all duration-500 text-3xl">
-            &rarr;
-          </span>
-        </a>
-        <Tilt>
-          <Image
-            placeholder="blur"
-            blurDataURL="/img.png"
-            width={550}
-            height={300}
-            src="/img.png"
-          />
-        </Tilt>
-      </motion.main>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#2f3136" />
+      </Head>
+      <NextSeo
+        title="New &rarr; Tab"
+        description="An uber-customizable new tab experience."
+        openGraph={{
+          type: "website",
+          url: "https://newtab.vc/",
+          title: "New → Tab",
+          description: "An uber-customizable new tab experience.",
+          images: [
+            {
+              url: "/img.png",
+              width: 1224,
+              height: 719,
+            },
+          ],
+        }}
+        twitter={{
+          handle: "@atmattt",
+          site: "@atmattt",
+          cardType: "summary_large_image",
+        }}
+      />
 
-      <motion.footer
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="absolute w-full bottom-5"
-      >
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <hr className="border-gray-700 w-3/4" />
-          <p className="group">
-            Made with{" "}
-            <span className="group-hover:text-red-500 duration-300 transition-colors">
-              ❤
+      <div className="absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="absolute w-full"
+        >
+          <div className="flex justify-between w-full px-5 mt-5">
+            <a
+              href="https://github.com/punctuations/newtab"
+              className="hover:underline"
+            >
+              New &rarr; Tab
+            </a>
+            <button className="py-2 px-6 rounded-md transition duration-300 border border-black dark:border-white dark:bg-white bg-black dark:text-black text-white dark:hover:bg-black hover:bg-white dark:hover:text-white hover:text-black">
+              Add it &rarr;
+            </button>
+          </div>
+        </motion.header>
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.75 }}
+          className="w-full h-full flex flex-col items-center justify-center space-y-12"
+        >
+          <a href="/tab" className="group">
+            <span className="group-hover:underline text-3xl">
+              An <span className="font-bold">uber</span>-customizable new tab
+              experience
             </span>{" "}
-            by Matt
-          </p>
-        </div>
-      </motion.footer>
-    </div>
+            <span className="group-hover:ml-2 transition-all duration-500 text-3xl">
+              &rarr;
+            </span>
+          </a>
+          <Tilt>
+            <Image
+              placeholder="blur"
+              blurDataURL="/img.png"
+              width={550}
+              height={300}
+              src="/img.png"
+            />
+          </Tilt>
+        </motion.main>
+
+        <motion.footer
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="absolute w-full bottom-5"
+        >
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <hr className="border-gray-700 w-3/4" />
+            <p className="group">
+              Made with{" "}
+              <span className="group-hover:text-red-500 duration-300 transition-colors">
+                ❤
+              </span>{" "}
+              by Matt
+            </p>
+          </div>
+        </motion.footer>
+      </div>
+    </>
   );
 }

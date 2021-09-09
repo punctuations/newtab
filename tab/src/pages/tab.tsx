@@ -8,6 +8,8 @@ import { Greeting } from "../components/Greeting";
 import { Checklist } from "../components/Checklist";
 import { Menu, Settings } from "../components/Menu";
 import { Time } from "../components/Time";
+import Head from "next/head";
+import { NextSeo } from "next-seo";
 
 export const CheckContext = React.createContext({
   checks: {
@@ -233,64 +235,93 @@ function Tab() {
   });
 
   return (
-    <div
-      style={{ backgroundImage: `url(${settings.background})` }}
-      className="bg-cover absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300"
-    >
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="absolute w-full"
-      >
-        <div className="flex justify-between w-full px-5 mt-5">
-          <SettingsContext.Provider value={val}>
-            <Time />
-          </SettingsContext.Provider>
-          <a
-            href="https://github.com/punctuations/newtab"
-            className="hover:underline"
-          >
-            New &rarr; Tab
-          </a>
-          <SettingsContext.Provider value={val}>
-            <Settings />
-          </SettingsContext.Provider>
-        </div>
-      </motion.header>
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.75 }}
-        className="w-full h-full flex flex-col items-center justify-center space-y-12"
-      >
-        <SettingsContext.Provider value={val}>
-          <Search />
-        </SettingsContext.Provider>
-        <SettingsContext.Provider value={val}>
-          {settings.quotes && <Quotes />}
-        </SettingsContext.Provider>
-      </motion.main>
-      <SettingsContext.Provider value={val}>
-        <CheckContext.Provider value={value}>
-          <Menu />
-        </CheckContext.Provider>
-      </SettingsContext.Provider>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#2f3136" />
+      </Head>
+      <NextSeo
+        title="New &rarr; Tab"
+        description="An uber-customizable new tab experience."
+        openGraph={{
+          type: "website",
+          url: "https://newtab.vc/tab",
+          title: "New → Tab",
+          description: "An uber-customizable new tab experience.",
+          images: [
+            {
+              url: "/img.png",
+              width: 1224,
+              height: 719,
+            },
+          ],
+        }}
+        twitter={{
+          handle: "@atmattt",
+          site: "@atmattt",
+          cardType: "summary_large_image",
+        }}
+      />
 
-      <motion.footer
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="absolute w-full bottom-5"
+      <div
+        style={{ backgroundImage: `url(${settings.background})` }}
+        className="bg-cover absolute flex bg-white dark:bg-black dark:text-white h-full w-full transition-colors duration-300"
       >
-        <div className="flex justify-between items-end w-full px-5">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="absolute w-full"
+        >
+          <div className="flex justify-between w-full px-5 mt-5">
+            <SettingsContext.Provider value={val}>
+              <Time />
+            </SettingsContext.Provider>
+            <a
+              href="https://github.com/punctuations/newtab"
+              className="hover:underline"
+            >
+              New &rarr; Tab
+            </a>
+            <SettingsContext.Provider value={val}>
+              <Settings />
+            </SettingsContext.Provider>
+          </div>
+        </motion.header>
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.75 }}
+          className="w-full h-full flex flex-col items-center justify-center space-y-12"
+        >
+          <SettingsContext.Provider value={val}>
+            <Search />
+          </SettingsContext.Provider>
+          <SettingsContext.Provider value={val}>
+            {settings.quotes && <Quotes />}
+          </SettingsContext.Provider>
+        </motion.main>
+        <SettingsContext.Provider value={val}>
           <CheckContext.Provider value={value}>
-            <Checklist />
+            <Menu />
           </CheckContext.Provider>
-          <Greeting />
-        </div>
-      </motion.footer>
-    </div>
+        </SettingsContext.Provider>
+
+        <motion.footer
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="absolute w-full bottom-5"
+        >
+          <div className="flex justify-between items-end w-full px-5">
+            <CheckContext.Provider value={value}>
+              <Checklist />
+            </CheckContext.Provider>
+            <Greeting />
+          </div>
+        </motion.footer>
+      </div>
+    </>
   );
 }
 
