@@ -181,13 +181,13 @@ export default function Home() {
         >
           <div className="flex flex-col items-center justify-center space-y-4">
             <hr className="border-gray-700 w-3/4" />
-            <p className="group">
+            <a href='https://dont-ping.me/github' className="group hover:underline">
               Made with{" "}
               <span className="group-hover:text-red-500 duration-300 transition-colors">
                 ❤
               </span>{" "}
               by Matt
-            </p>
+            </a>
           </div>
         </motion.footer>
       </div>
