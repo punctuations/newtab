@@ -4,9 +4,12 @@ import { useKeyPress } from "ahooks";
 import Tilt from "react-parallax-tilt";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 
 export default function Home() {
+  const router = useRouter();
+
   function themeLoad(): string {
     if (process.browser && localStorage.getItem("theme")) {
       return localStorage.getItem("theme") as string;
@@ -142,7 +145,16 @@ export default function Home() {
             >
               New &rarr; Tab
             </a>
-            <button className="py-2 px-6 rounded-md transition duration-300 border border-black dark:border-white dark:bg-white bg-black dark:text-black text-white dark:hover:bg-black hover:bg-white dark:hover:text-white hover:text-black">
+            <button
+              onClick={() =>
+                router.push(
+                  !!window.chrome
+                    ? "#"
+                    : "https://addons.mozilla.org/addon/new-tab/"
+                )
+              }
+              className="py-2 px-6 rounded-md transition duration-300 border border-black dark:border-white dark:bg-white bg-black dark:text-black text-white dark:hover:bg-black hover:bg-white dark:hover:text-white hover:text-black"
+            >
               Add it &rarr;
             </button>
           </div>
@@ -181,7 +193,10 @@ export default function Home() {
         >
           <div className="flex flex-col items-center justify-center space-y-4">
             <hr className="border-gray-700 w-3/4" />
-            <a href='https://dont-ping.me/github' className="group hover:underline">
+            <a
+              href="https://dont-ping.me/github"
+              className="group hover:underline"
+            >
               Made with{" "}
               <span className="group-hover:text-red-500 duration-300 transition-colors">
                 ❤
