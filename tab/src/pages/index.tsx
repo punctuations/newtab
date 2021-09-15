@@ -149,7 +149,7 @@ export default function Home() {
               onClick={() =>
                 router.push(
                   !!window.chrome
-                    ? "#"
+                    ? "https://chrome.google.com/webstore/detail/new-tab/aepncielffkpllofgjhahdphcdbcjfna"
                     : "https://addons.mozilla.org/addon/new-tab/"
                 )
               }
