@@ -194,7 +194,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-4">
             <hr className="border-gray-700 w-3/4" />
             <a
-              href="https://dont-ping.me/github"
+              href="https://github.com/punctuations/newtab"
               className="group hover:underline"
             >
               Made with{" "}
