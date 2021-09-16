@@ -60,6 +60,7 @@ export function Search() {
           autoFocus
           id="search"
           name="search"
+          size={location.length > 35 ? (location.length > 55 ? 45 : 35) : 25}
           placeholder={placeholder}
           className="ml-2 focus:outline-none bg-transparent border-b border-black dark:border-white"
           onChange={(e) => setLocation(e.target.value)}
