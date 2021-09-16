@@ -57,6 +57,7 @@ export function Search() {
       <label htmlFor="search">search</label>
       <div className="flex flex-row">
         <input
+          autoFocus
           id="search"
           name="search"
           placeholder={placeholder}
