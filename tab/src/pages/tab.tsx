@@ -165,6 +165,10 @@ function Tab() {
     localStorage.setItem("time", `${settings.time}`);
   }, [settings.time]);
 
+  React.useEffect(() => {
+    localStorage.setItem("engine", `${settings.engine}`);
+  }, [settings.engine]);
+
   const val = React.useMemo(() => ({ settings, setSettings }), [settings]);
 
   const value = React.useMemo(() => ({ checks, setChecks }), [checks]);
