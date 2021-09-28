@@ -175,15 +175,22 @@ function Tab() {
 
   useKeyPress("ESCAPE", () => {
     if (document.activeElement?.tagName.toLowerCase() !== "input")
-      setSettings({
-        visible: !settings.visible,
-        engine: settings.engine,
-        background: settings.background,
-        time: settings.time,
-        quotes: settings.quotes,
-        blur: settings.blur,
-        theme: settings.theme,
-      });
+      if (!checks.visible) {
+        setSettings({
+          visible: !settings.visible,
+          engine: settings.engine,
+          background: settings.background,
+          time: settings.time,
+          quotes: settings.quotes,
+          blur: settings.blur,
+          theme: settings.theme,
+        });
+      } else {
+        setChecks({
+          visible: !checks.visible,
+          data: checks.data,
+        });
+      }
   });
 
   useKeyPress("C", () => {
