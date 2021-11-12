@@ -28,7 +28,7 @@ export function Menu() {
 
   function handleBG(e: { key: string }) {
     if (e.key === "Enter") {
-      localStorage.setItem("bg", bg as unknown as string);
+      localStorage.setItem("bg", (bg as unknown) as string);
 
       setSettings({
         visible: settings.visible,
@@ -65,11 +65,11 @@ export function Menu() {
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.5, x: "-50%", y: "-50%" }}
+            initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="z-40 bg-white dark:bg-black absolute top-1/2 left-1/2 flex flex-col items-start space-y-4 shadow-2xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6"
+            className="z-40 bg-white dark:bg-black absolute -translate-y-1/2 -translate-x-1/2 top-1/2 left-1/2 flex flex-col items-start space-y-4 shadow-2xl dark:shadow-none dark:border border-gray-700 rounded-md px-5 py-6"
           >
             <div className="flex w-full justify-between">
               <p className="p-1 rounded bg-gray-200 dark:bg-gray-800 text-gray-500 text-xs font-bold">
