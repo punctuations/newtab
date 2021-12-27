@@ -42,9 +42,9 @@ export function Search() {
       if (!isURL(location)) {
         // user is searching, location is not address.
         router.push(
-          `https://search.balls.workers.dev/?q=${location}&engine=${encodeURIComponent(
-            settings.engine
-          )}&ref=newtab`
+          `https://search.balls.workers.dev/?q=${encodeURIComponent(
+            location
+          )}&engine=${encodeURIComponent(settings.engine)}&ref=newtab`
         );
       } else {
         router.push(location);

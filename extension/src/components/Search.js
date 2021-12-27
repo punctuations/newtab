@@ -38,9 +38,9 @@ export function Search() {
     if (e.key === "Enter") {
       if (!isURL(location)) {
         // user is searching, location is not address.
-        window.location.href = `https://search.balls.workers.dev/?q=${location}&engine=${encodeURIComponent(
-          settings.engine
-        )}&ref=newtab`;
+        window.location.href = `https://search.balls.workers.dev/?q=${encodeURIComponent(
+          location
+        )}=${encodeURIComponent(settings.engine)}&ref=newtab`;
       } else {
         window.location.href = location;
       }
