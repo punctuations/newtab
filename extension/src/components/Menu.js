@@ -188,6 +188,13 @@ export function Menu() {
                   >
                     bing
                   </option>
+                  <option
+                    selected={
+                      settings.engine === "https://kagi.com/search?q={q}"
+                    }
+                    key="kagi"
+                    value="https://kagi.com/search?q={q}"
+                  >
                 </select>
               </div>
               <div className="flex items-center justify-between">
